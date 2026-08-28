@@ -1,7 +1,7 @@
 # AGENTS.md template — breakthrough-loop discipline
 
 Copy this file into your project root as `AGENTS.md` (the cross-tool agent
-instruction standard read by Codex, Cursor, Jules, Amp and others), or merge
+instruction standard read by DeepSeek Harness, Codex, Cursor, Jules, Amp and others), or merge
 the sections into an existing one. Full methodology:
 https://github.com/GuoCheng24/breakthrough-harness
 

@@ -1,10 +1,10 @@
 # breakthrough-harness
 
-[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
-
 **让你的科研 agent 难以被欺骗——首先是难以被它自己欺骗。**
 
-[English](README.md) · 任何 agent 技术栈皆可用 · 纯方法论 + 一个可运行演示
+[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+
+[English](README.md) · 任何 agent 技术栈皆可用 · 纯方法论 + 两个可运行演示
 
 ```text
 校准集扫描(只许在这里调参)                     留出集确认(永不调参)
@@ -26,10 +26,10 @@
 ## 核心主张
 
 > **突破是一个吞吐量问题。**
-> 突破 ≈ 大量廉价尝试 × 一个骗不过去的评分函数
+> 突破 ≈ 大量廉价尝试 × 一个很难骗过的评分函数
 
 串行手工实验一年只有几十次尝试;真正产出过构造性突破的系统(数学构造的程序搜索、
-锦标赛式假设引擎)共享一副骨架:**并行廉价生成 + 自动化的不可欺骗筛选**。
+锦标赛式假设引擎)共享一副骨架:**并行廉价生成 + 自动化的难以欺骗的筛选**。
 你复制不了它们的算力,但可以复制骨架——前提是评分函数按审稿人的严格程度建造。
 
 还有一个更安静的推论:当每次尝试都很贵,理性选择永远是审计已有的而不是建造可能
@@ -53,17 +53,19 @@
 
 | 你的技术栈 | 这样做 |
 |---|---|
-| **DeepSeek Harness** | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录——DSH 原生读 `AGENTS.md`,无需其它配置 |
+| **DeepSeek Harness** | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(DSH 原生读 `AGENTS.md`)——或装成 DSH skill:`mkdir -p ~/.agents/skills && cp -r .agents/skills/breakthrough-loop $_` |
 | **OpenAI Codex** | 同一个文件:把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(Codex 读 `AGENTS.md`) |
 | **其它读 `AGENTS.md` 的工具**(Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
-| **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
-| **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc 你的项目/.cursor/rules/` |
+| **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` 后 `/plugin install breakthrough-harness@breakthrough-harness`——或手动 `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
+| **Cursor** | `mkdir -p 你的项目/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
 | **GitHub Copilot** | 把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
 | **Gemini CLI** | 把 [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) 拷进项目根目录为 `GEMINI.md` |
-| **Windsurf** | `cp adapters/windsurf/breakthrough-loop.md 你的项目/.windsurf/rules/` |
-| **Cline** | `cp adapters/cline/breakthrough-loop.md 你的项目/.clinerules/` |
+| **Windsurf** | `mkdir -p 你的项目/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
+| **Cline** | `mkdir -p 你的项目/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |
 | **Aider** | 保存 [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md),用 `aider --read CONVENTIONS.md` 启动 |
 | **其它一切**(OpenAI/Gemini/Anthropic 裸 API、LangChain、自研循环、或者你本人) | 粘贴 [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
+
+所有适配器承载同一套方法论;五个纯 markdown 适配器由单一源([`adapters/_core.md`](adapters/_core.md))生成,漂移即 CI 失败。你的工具若读 `AGENTS.md`,装它或专属文件二选一,别都装。
 
 ## 快速开始
 
@@ -92,6 +94,17 @@ python examples/toy_loop.py     # 30 秒内,只依赖 numpy
 
 它插进你已有的任何东西,不替代任何东西。
 
+## 骨架的出处
+
+核心主张不是民间传说;点名的系统与已知失效模式:
+
+- **FunSearch**(Nature 2023)——程序搜索 + 自动评估器,产出数学新构造。
+- **AI Co-Scientist**(Google 2025-26)——锦标赛式假设生成/排名 + 自动评审。
+- **The reusable holdout**(Dwork 等, Science 2015)——反复咨询留出集为何会把它
+  悄悄变成第二个校准集(`loop/` 给留出集设生命周期与预算的依据)。
+- **测试集过拟合实测**(Recht 等, ICML 2019)——领域尺度上测得的"增益不迁移"分布。
+- **Deep learning tuning playbook**(Godbole 等, 2023)——本仓库扫参规则的来源之一。
+
 ## 许可
 
-MIT。用它、fork 它、反驳它——如果某条规则帮你省下一个月,一颗 star 能帮别人也找到它。
+MIT。用它、fork 它、反驳它。

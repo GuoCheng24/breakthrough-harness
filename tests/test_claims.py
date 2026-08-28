@@ -28,6 +28,36 @@ def test_toy_loop_runs_and_tells_its_story():
     # the cheater's collapse must land below both null models' calibration scores
     m = re.search(r"CHEATER\s+calib\s+([\d.]+)\s+->\s+held-out\s+(-?[\d.]+)", out)
     assert m and float(m.group(2)) < 1.0, "cheater held-out score suspiciously good"
+    nulls = [float(x) for x in re.findall(r"null models at (-?[\d.]+) / (-?[\d.]+) dB", out)[0]]
+    top = float(re.search(r"^\s*(-?[\d.]+) dB", out, re.M).group(1))
+    assert max(nulls) < top - 3, "null models are not clearly below the top candidate"
+
+
+def test_story_is_structural_not_seed_tuned():
+    """toy_loop.py claims no seed tuning: any seed must repeat the story."""
+    import os
+    for seed in ("1", "2"):
+        env = dict(os.environ, SEED=seed)
+        r = subprocess.run([sys.executable, str(ROOT / "examples" / "toy_loop.py")],
+                           capture_output=True, text=True, timeout=300, env=env)
+        assert r.returncode == 0, r.stderr
+        assert re.search(r"CHEATER.*COLLAPSED", r.stdout), f"seed {seed}: cheater survived"
+        assert r.stdout.count("REPRODUCED") >= 2, f"seed {seed}: honest gains lost"
+
+
+def test_anti_cheat_freeze_rule_actually_fires():
+    """Habit 5 applied to the flagship demo itself: boost a null model to the
+    top and the freeze rule must halt the script - for the right reason."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "toy_loop_broken", ROOT / "examples" / "toy_loop.py")
+    tl = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tl)
+    reason, note = tl.CANDIDATES["CHEATER"][0], "deliberately broken null"
+    tl.CANDIDATES["null: zeros"] = (reason, note)
+    import pytest
+    with pytest.raises(SystemExit, match="ANTI-CHEAT FIRED"):
+        tl.main()
 
 
 def test_readme_quick_start_matches_the_demo():
@@ -49,25 +79,26 @@ def test_every_internal_link_resolves():
 
 
 def test_no_private_information_leaked():
-    """The sanitisation rule, enforced: no local paths, no session artifacts,
-    no internal memory references may appear anywhere in the repository."""
-    patterns = [r"/public/home/", r"/public/share/", r"chengguo_tmp",
-                r"\[\[[a-z0-9-]+\]\]", r"df19028c"]
+    """The sanitisation rule, enforced: no local paths, usernames, or session
+    artifacts anywhere. Patterns are assembled at runtime so this file does
+    not itself publish the tokens it hunts; every text file is scanned."""
+    user = "".join(["chen", "gguo"])
+    sess = "".join(["df19", "028c"])
+    patterns = ["/" + "public/" + "home/", "/" + "public/" + "share/",
+                user, sess, r"\[\[[a-z0-9-]+\]\]"]
     bad = []
     for doc in ROOT.rglob("*"):
-        if doc.is_dir() or ".git" in doc.parts:
+        if doc.is_dir() or ".git" in doc.parts or doc.suffix == ".png":
             continue
-        if doc.suffix not in (".md", ".py", ".yml", ".yaml", ".txt", ""):
-            continue
-        try:
-            text = doc.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, PermissionError):
-            continue
+        raw = doc.read_bytes()
+        if b"\x00" in raw[:1024]:
+            continue                      # binary
+        text = raw.decode("utf-8", errors="ignore")
         if doc.name == "test_claims.py":
-            continue                      # this file names the patterns it hunts
+            continue                      # assembles the patterns above
         for pat in patterns:
             if re.search(pat, text):
-                bad.append(f"{doc.relative_to(ROOT)}: matches {pat}")
+                bad.append(f"{doc.relative_to(ROOT)}: matches a private pattern")
     assert not bad, "\n".join(bad)
 
 
@@ -123,7 +154,15 @@ def test_force_balance_demo_tells_its_story():
     assert r.returncode == 0, r.stderr
     out = r.stdout
     assert "essentially flat" in out and "<- peak" in out
+    assert "interior peak" in out, "demo no longer finds an interior peak"
     act1 = [float(m) for m in re.findall(r"lam =\s+[\d.]+\s+score\s+(-?[\d.]+) dB",
                                          out.split("Act 2")[0])]
     peak = max(float(m) for m in re.findall(r"score\s+(-?[\d.]+) dB(?=\s+<- peak)", out))
     assert peak > max(act1) + 10, f"peak {peak} not clearly above flat sweep {max(act1)}"
+
+
+def test_generated_adapters_do_not_drift():
+    """Five adapters are generated from adapters/_core.md; hand-edits drift."""
+    r = subprocess.run([sys.executable, str(ROOT / "adapters" / "build.py"), "--check"],
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0, r.stdout + r.stderr

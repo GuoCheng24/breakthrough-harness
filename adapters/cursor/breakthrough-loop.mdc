@@ -1,13 +1,14 @@
 ---
-description: Research discipline - breakthrough loop with an un-foolable harness
-alwaysApply: false
+description: Research discipline - breakthrough loop with a hard-to-fool harness
+alwaysApply: true
 ---
 # Breakthrough-loop discipline (drop into .cursor/rules/)
 Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 When running research experiments in this project:
 - Triage the target first: cheap scoring function + existing groundwork +
-  externally recognisable win. Any missing -> flag it and stop.
+  externally recognisable win + an oracle-ceiling/trivial-baseline gap worth
+  mining (measure before round 1). Any missing -> flag it and stop.
 - Build the harness before the method: single evaluation entry point;
   null models scored first and pinned to the floor; metric conventions pinned
   (double-report if the published one differs); calibration and evaluation
@@ -18,9 +19,14 @@ When running research experiments in this project:
 - Loop: 10-30 variants/round each with a one-line reason it might win;
   sanity-check before entry; executors only call the entry point, never
   write method code inline; select on calibration; confirm top-k held-out.
-  Unreproduced gains do not exist. Persist numbers to disk, then write.
+  Unreproduced gains do not exist; report confirmations with a paired error
+  bar, budget held-out accesses. Persist numbers to disk, then write.
 - Claim polarity: the main sentence of any result is constructive
   ("we propose X, it solves Y, number Z"); audits and negatives are
   supporting material, never the headline.
 - Verify every new guard by deliberately breaking what it watches, and
   confirm it fails for the right reason.
+- Stop conditions: a well-scoring null model or any firing anti-cheat check
+  freezes all conclusions until the harness is repaired; when candidates stop
+  carrying new reasons, record the ceiling number and escalate to a more
+  ambitious target class instead of continuing to sweep.

@@ -1,6 +1,6 @@
+<!-- Place as .github/copilot-instructions.md or merge into yours.
+     Full methodology: https://github.com/GuoCheng24/breakthrough-harness -->
 # Research discipline (breakthrough-harness)
-Place as .github/copilot-instructions.md or merge into yours.
-Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 For any experiment or evaluation code in this repository:
 - All method scoring goes through the single evaluation entry point; never

@@ -1,0 +1,4 @@
+- [ ] New rule? Tuition included (real, anonymised — not hypothetical).
+- [ ] Touched methodology text? Edited `adapters/_core.md` and ran `python adapters/build.py`.
+- [ ] Added a guard? PR description shows it firing on a deliberate violation, for the right reason.
+- [ ] `python -m pytest tests/` green.

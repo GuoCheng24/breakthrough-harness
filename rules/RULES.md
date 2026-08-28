@@ -77,3 +77,14 @@ commits, sentences cite files. *Tuition: a full parallel sweep's final
 ranking existed only in the orchestrator's return value; the commit meant to
 record it reported "nothing to commit", which was the only warning that the
 evidence for a headline claim was one process exit away from vanishing.*
+
+## 11. No error bar, no effect
+A confirmed gain is a paired difference with an interval, evaluated on the
+unit of independence (patient / speaker / site), not a point estimate that
+happened to land on the right side. Bootstrap within one split does not
+measure split-to-split noise, and sample-level resampling under group
+structure understates variance exactly when it matters. *Tuition: a gain
+quoted confidently for days shrank to less than half and lost significance
+the moment evaluation groups were made non-overlapping — the original
+sample-level cross-validation had been inflated ~2.5× by group leakage, and
+an in-split bootstrap had blessed it the whole time.*

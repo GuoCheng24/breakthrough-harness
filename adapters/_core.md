@@ -1,10 +1,3 @@
-<!--
-  breakthrough-loop discipline for Cline.
-  Install: mkdir -p .clinerules && cp this file into .clinerules/
-  Regenerated from adapters/_core.md - edit there, not here. https://github.com/GuoCheng24/breakthrough-harness
--->
-# Research discipline for this project
-
 ### Scope
 These rules govern experiment campaigns and any sentence that reports a
 number. Routine code changes, refactors and infrastructure work are exempt.

@@ -1,0 +1,15 @@
+{
+  "name": "breakthrough-harness",
+  "owner": {
+    "name": "Guo Cheng",
+    "url": "https://github.com/GuoCheng24"
+  },
+  "plugins": [
+    {
+      "name": "breakthrough-harness",
+      "source": "./",
+      "description": "Research discipline that keeps agent-run experiments honest: null models on the floor, calibration/held-out separation, claim polarity, guards shown to fail."
+    }
+  ],
+  "description": "Discipline layer for research agents: the breakthrough-loop skill from breakthrough-harness."
+}

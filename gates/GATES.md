@@ -5,7 +5,7 @@ They exist because the most expensive failures are not bugs — they are
 months spent on targets that could never have paid out, or results framed so
 they cannot be published.
 
-## Gate 1 — target triage (three questions, all must pass)
+## Gate 1 — target triage (four questions, all must pass)
 
 1. **Is there a cheap scoring function?** Seconds-to-minutes, unambiguous,
    machine-runnable. Without it the loop cannot turn and you are back to
@@ -20,6 +20,12 @@ they cannot be published.
 3. **If you win, does the field agree you won?** A leaderboard with published
    numbers, or a controlled comparison a referee accepts. "Better on our own
    metric" convinces no one, including — eventually — you.
+4. **Is there headroom worth mining?** Before round 1 — not at round 10 —
+   score an oracle ceiling (what perfect information would achieve) and a
+   trivial/random baseline through the same pipeline. If the gap between
+   them is small, or your strongest baseline already sits at the ceiling,
+   there is nothing for the loop to find; every later round inherits this
+   measurement for free.
 
 ## Gate 2 — the claim-polarity red line
 
@@ -37,6 +43,16 @@ over-audited; its claims have inverted polarity.
 
 **The check-sentence**, at proposal time and at writing time:
 *is the main verb "propose / solve / achieve", or is it "found that … fails"?*
+
+**The counterweight, so this gate is never read as publication bias**: the
+red line governs which targets you pick and how you frame *your own*
+campaign — it does not license massaging a null into a positive. When a
+held-out-confirmed negative closes a question the field genuinely cares
+about (it contradicts a published claim, or is a well-powered null on a
+live hypothesis), the negative *is* the correct headline; record it, publish
+it if it clears that bar, and re-enter Gate 1 with a new target. What the
+gate forbids is *drifting* into audit-shaped work because every attempt at
+construction felt expensive — fix the price of attempts instead.
 
 ## Gate 3 — occupancy at claim level
 

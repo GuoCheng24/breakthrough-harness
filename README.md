@@ -1,10 +1,10 @@
 # breakthrough-harness
 
-[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
-
 **Make your research agent hard to fool — starting with itself.**
 
-[中文版](README.zh-CN.md) · works with any agent stack · pure methodology + one runnable demo
+[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+
+[中文版](README.zh-CN.md) · works with any agent stack · pure methodology + two runnable demos
 
 ```text
 calibration sweep (tuning allowed here only)          held-out confirmation (tuning never)
@@ -29,12 +29,12 @@ on every push.
 ## The core claim
 
 > **Breakthroughs are a throughput problem.**
-> breakthrough ≈ many cheap attempts × a scoring function that cannot be fooled.
+> breakthrough ≈ many cheap attempts × a scoring function that is hard to fool.
 
 Serial, hand-crafted experiments produce a few dozen attempts per year; the
 systems that actually produced constructive breakthroughs (program search
 over mathematical constructions, tournament-style hypothesis engines) share
-one skeleton: **parallel cheap generation + automated un-foolable selection**.
+one skeleton: **parallel cheap generation + automated selection that is hard to fool**.
 You cannot copy their compute; you can copy the skeleton — if the scoring
 function is engineered with the rigor a referee would apply. That engineering
 is this repository.
@@ -63,17 +63,22 @@ adapters just package it for wherever your agent reads instructions:
 
 | Your stack | Do this |
 |---|---|
-| **DeepSeek Harness** | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root — DSH reads `AGENTS.md` natively, nothing else to configure |
+| **DeepSeek Harness** | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (DSH reads `AGENTS.md` natively) — or install as a DSH skill: `mkdir -p ~/.agents/skills && cp -r .agents/skills/breakthrough-loop $_` |
 | **OpenAI Codex** | same file: copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (Codex reads `AGENTS.md`) |
 | **Any other `AGENTS.md` tool** (Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
-| **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
-| **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc your-project/.cursor/rules/` |
+| **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` then `/plugin install breakthrough-harness@breakthrough-harness` — or manually `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
+| **Cursor** | `mkdir -p your-project/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
 | **GitHub Copilot** | merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
 | **Gemini CLI** | copy [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) into your project root as `GEMINI.md` |
-| **Windsurf** | `cp adapters/windsurf/breakthrough-loop.md your-project/.windsurf/rules/` |
-| **Cline** | `cp adapters/cline/breakthrough-loop.md your-project/.clinerules/` |
+| **Windsurf** | `mkdir -p your-project/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
+| **Cline** | `mkdir -p your-project/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |
 | **Aider** | save [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md) and launch `aider --read CONVENTIONS.md` |
 | **Anything else** (OpenAI/Gemini/Anthropic raw API, LangChain, custom loop, a human) | paste [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
+
+All adapters carry the same methodology; the five plain-markdown ones are
+generated from a single source ([`adapters/_core.md`](adapters/_core.md)) and
+CI fails if they drift. If your tool reads `AGENTS.md`, install either that
+or the tool-specific file — not both.
 
 ## Quick start
 
@@ -112,7 +117,25 @@ python examples/toy_loop.py     # < 30 s, numpy only
 
 It plugs into whatever you already run. It replaces nothing.
 
+## Where the skeleton comes from
+
+The core claim is not folklore; the named systems and known failure modes:
+
+- **FunSearch** — Romera-Paredes et al., *Mathematical discoveries from
+  program search with large language models*, Nature 2023: program search +
+  automated evaluator producing new constructions (cap set, bin packing).
+- **AI Co-Scientist** — Gottweis et al., Google 2025-26: tournament-style
+  hypothesis generation/ranking with automated review.
+- **The reusable holdout** — Dwork et al., Science 2015: why repeated
+  consultation of a held-out set silently turns it into a calibration set
+  (the reason `loop/` gives held-out data a lifecycle and a budget).
+- **Test-set overfitting in practice** — Recht et al., ICML 2019 (*Do
+  ImageNet classifiers generalize to ImageNet?*): distribution of gains that
+  fail to transfer, measured at field scale.
+- **Deep learning tuning playbook** — Godbole et al., 2023: the
+  discipline of scientific vs. nuisance hyperparameters this repo's sweep
+  rules descend from.
+
 ## License
 
-MIT. Use it, fork it, disagree with it — but if a rule here saves you a
-month, a star helps other people find it.
+MIT. Use it, fork it, disagree with it.

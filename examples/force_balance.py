@@ -76,17 +76,18 @@ def main():
     print("=" * 64)
     print("Act 3 - sweep around the measured balance point")
     print("=" * 64)
-    best = None
-    for mult in (0.1, 0.3, 1.0, 3.0, 10.0):
-        lam = lam_star * mult
-        s = score(lam)
-        tag = ""
-        if best is None or s > best[1]:
-            best, tag = (lam, s), "   <- peak"
-        print(f"  lam = {lam:8.4f}   score {s:7.2f} dB{tag}")
-    print(f"\n  A clean interior peak at lam = {best[0]:.4f} - the parameter was")
-    print("  never inert; the sweep was simply on one side of the balance point.")
-    print("  Cost of finding out: one gradient-norm evaluation.")
+    mults = (0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0)
+    scores = [(lam_star * m, score(lam_star * m)) for m in mults]
+    i_best = max(range(len(scores)), key=lambda i: scores[i][1])
+    for i, (lam, sc) in enumerate(scores):
+        print(f"  lam = {lam:8.4f}   score {sc:7.2f} dB{'   <- peak' if i == i_best else ''}")
+    if 0 < i_best < len(scores) - 1:
+        print(f"\n  A clean interior peak at lam = {scores[i_best][0]:.4f} - the parameter")
+        print("  was never inert; the first sweep was simply on one side of the")
+        print("  balance point. Cost of finding out: one gradient-norm evaluation.")
+    else:
+        print("\n  Peak sits at the sweep edge - extend the sweep before claiming")
+        print("  anything. (A boundary maximum is a warning, not a result.)")
 
 
 if __name__ == "__main__":

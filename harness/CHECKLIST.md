@@ -1,4 +1,4 @@
-# Building a harness that cannot be fooled
+# Building a harness that is hard to fool
 
 The harness is the scoring engine the whole loop stands on. If it can be
 fooled, parallel search will find the fooling faster than it finds the
@@ -36,11 +36,23 @@ rewards, which is not always what you meant.
 - [ ] **Calibration and evaluation physically separated** — different files,
       different directories, ideally different loaders. "I'll just peek once"
       is how test-set tuning starts. The separation must be structural, not
-      behavioral.
+      behavioral. And split on the **unit of independence** — patient,
+      speaker, site, time period — not on files: two files from the same
+      patient in different splits is group leakage wearing a clean-split
+      costume, and cross-validated numbers inflated this way can look
+      2–3× larger than the real effect.
 - [ ] **An absurd baseline score freezes everything.** When FBP scores below
       a constant image, the bug is in the harness, not in fifty years of
       tomography. The harness's own rule fired on its own author within the
       first hour of its existence; that is the rule working.
+
+- [ ] **Keep one positive control.** A signal the harness *must* detect — a
+      known-good method beating a known-weak one, a planted effect at known
+      strength. The null models bound the floor; the positive control proves
+      the ceiling is reachable. A pipeline that stops detecting its positive
+      control has broken silently, and every null result it produced since
+      is unusable — "X carries no signal" is only publishable next to a
+      demonstration that the same pipeline detects the signal it should.
 
 ### Reference baselines
 - [ ] Reproduce at least one **published** number before trusting any of your
@@ -62,6 +74,14 @@ rewards, which is not always what you meant.
 - [ ] When verifying a guard by deliberate breakage, confirm it fails **for
       the right reason** — a test can go red because an unrelated assertion
       tripped first, and then it protects nothing.
+
+### When Tier 1 is genuinely expensive
+Some campaigns cannot score a candidate in minutes — training runs cost
+GPU-hours. The tier design still applies, through proxies: short-budget
+training, subset scoring, early-epoch metrics. One mandatory validation
+step before trusting any proxy: show on a pilot round that the proxy
+**rank-correlates** with the full-budget score over ~10 candidates. A proxy
+that reorders candidates is a harness that selects noise, cheaply.
 
 ## Feeding the harness
 

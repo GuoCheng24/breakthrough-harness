@@ -7,7 +7,7 @@ attempts per year. Every system that has actually produced constructive
 breakthroughs — program search over mathematical constructions, tournament
 hypothesis engines — shares one skeleton regardless of scale:
 
-> **parallel cheap generation → automated un-foolable selection → survivors evolve**
+> **parallel cheap generation → automated selection that is hard to fool → survivors evolve**
 
 You cannot copy their compute. You can copy the skeleton. What makes it work
 at solo scale is not the parallelism — it is that **the cost of one attempt
@@ -48,6 +48,22 @@ exist during this phase.
 Top-k candidates re-score on the evaluation set at full budget.
 **A gain that does not reproduce there does not exist** — write the collapsed
 ones down too; a collapse is information about your calibration set.
+
+Confirm with an error bar, not a point estimate: report the **paired
+difference** against the incumbent across held-out instances (and seeds,
+where training is stochastic). A sub-point gain whose interval crosses zero
+is a coin flip, not a result — several of the tuition stories in
+`rules/RULES.md` were bought exactly here.
+
+**Held-out data has a lifecycle.** Every consultation of the evaluation set
+leaks a little information back into your choices; over many rounds the
+"held-out" set quietly becomes a second calibration set (adaptive reuse —
+see Dwork et al., *The reusable holdout*, Science 2015). Discipline:
+- budget and **log every access** to the evaluation set, per campaign;
+- confirm only top-k per round (k small), never the full sweep;
+- keep one final, untouched confirmation split that is scored **exactly
+  once**, for the headline number of the campaign;
+- if a campaign runs long, refresh the working held-out split and re-baseline.
 
 Then: persist the numbers to disk, commit, and feed every failure mode you
 met back into the harness as a new check. The harness must get harder to fool

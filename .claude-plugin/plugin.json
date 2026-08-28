@@ -1,0 +1,10 @@
+{
+  "name": "breakthrough-harness",
+  "description": "Breakthrough-loop research discipline: hard-to-fool scoring harness + parallel cheap candidate generation, as a Claude Code skill.",
+  "version": "0.1.0",
+  "author": { "name": "Guo Cheng" },
+  "homepage": "https://github.com/GuoCheng24/breakthrough-harness",
+  "repository": "https://github.com/GuoCheng24/breakthrough-harness",
+  "license": "MIT",
+  "skills": "./adapters/claude-code"
+}

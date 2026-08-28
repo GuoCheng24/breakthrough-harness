@@ -15,9 +15,11 @@ What the harness demonstrates, in order:
 Pure numpy. Runs in seconds. No seeds were tuned to make the story work:
 change SEED and the same qualitative story repeats, because it is structural.
 """
+import os
+
 import numpy as np
 
-SEED = 0
+SEED = int(os.environ.get("SEED", "0"))
 rng = np.random.default_rng(SEED)
 
 # ---------------------------------------------------------------- problem --
@@ -120,8 +122,12 @@ def main():
         print(f"  {s:7.2f} dB   {name:12s}  ({note})")
 
     nulls = [calib["null: zeros"], calib["null: A^T y"]]
-    real = [s for n, s in calib.items() if not n.startswith("null")]
-    assert max(nulls) < min(real) + 1e-9 or True
+    honest = [s for n, s in calib.items()
+              if not n.startswith("null") and n != "CHEATER"]
+    if max(nulls) >= max(honest) - 3:
+        raise SystemExit("ANTI-CHEAT FIRED: a null model scores within 3 dB of "
+                         "the best honest candidate - freeze every conclusion "
+                         "and repair the harness before proceeding")
     print(f"\n  anti-cheat: null models at {nulls[0]:.2f} / {nulls[1]:.2f} dB - "
           "the floor is where it belongs")
 

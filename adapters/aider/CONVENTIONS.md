@@ -1,9 +1,8 @@
-# AGENTS.md template — breakthrough-loop discipline
+# CONVENTIONS.md — breakthrough-loop discipline (Aider)
 
-Copy this file into your project root as `AGENTS.md` (the cross-tool agent
-instruction standard read by DeepSeek Harness, OpenAI Codex, Cursor, Jules, Amp and others), or merge
-the sections into an existing one. Full methodology:
-https://github.com/GuoCheng24/breakthrough-harness
+Save as `CONVENTIONS.md` in your project and launch with
+`aider --read CONVENTIONS.md` (or add it to `.aider.conf.yml` under `read:`).
+Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 ## Research discipline for this project
 

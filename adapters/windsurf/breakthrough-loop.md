@@ -1,9 +1,12 @@
-# AGENTS.md template — breakthrough-loop discipline
+---
+trigger: always_on
+description: Research discipline - null models, calibration/held-out separation, claim polarity
+---
 
-Copy this file into your project root as `AGENTS.md` (the cross-tool agent
-instruction standard read by DeepSeek Harness, OpenAI Codex, Cursor, Jules, Amp and others), or merge
-the sections into an existing one. Full methodology:
-https://github.com/GuoCheng24/breakthrough-harness
+# Breakthrough-loop discipline (Windsurf rules)
+
+Copy this file into `.windsurf/rules/` in your project.
+Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 ## Research discipline for this project
 

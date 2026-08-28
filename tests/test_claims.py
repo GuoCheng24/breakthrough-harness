@@ -87,7 +87,11 @@ def test_every_adapter_carries_the_core_concepts():
                 ROOT / "adapters" / "SYSTEM_PROMPT.md",
                 ROOT / "adapters" / "cursor" / "breakthrough-loop.mdc",
                 ROOT / "adapters" / "copilot" / "copilot-instructions.md",
-                ROOT / "adapters" / "claude-code" / "breakthrough-loop" / "SKILL.md"]
+                ROOT / "adapters" / "claude-code" / "breakthrough-loop" / "SKILL.md",
+                ROOT / "adapters" / "gemini" / "GEMINI.md",
+                ROOT / "adapters" / "windsurf" / "breakthrough-loop.md",
+                ROOT / "adapters" / "cline" / "breakthrough-loop.md",
+                ROOT / "adapters" / "aider" / "CONVENTIONS.md"]
     bad = []
     for a in adapters:
         assert a.exists(), f"adapter missing: {a}"
@@ -104,5 +108,22 @@ def test_readme_adapter_table_matches_the_files():
         for path in ("adapters/AGENTS.md", "adapters/SYSTEM_PROMPT.md",
                      "adapters/cursor/breakthrough-loop.mdc",
                      "adapters/copilot/copilot-instructions.md",
-                     "adapters/claude-code/breakthrough-loop"):
+                     "adapters/claude-code/breakthrough-loop",
+                     "adapters/gemini/GEMINI.md",
+                     "adapters/windsurf/breakthrough-loop.md",
+                     "adapters/cline/breakthrough-loop.md",
+                     "adapters/aider/CONVENTIONS.md"):
             assert path in text, f"{name} does not mention {path}"
+
+
+def test_force_balance_demo_tells_its_story():
+    """Act 1 near-flat, Act 3 finds an interior peak well above Act 1's best."""
+    r = subprocess.run([sys.executable, str(ROOT / "examples" / "force_balance.py")],
+                       capture_output=True, text=True, timeout=300)
+    assert r.returncode == 0, r.stderr
+    out = r.stdout
+    assert "essentially flat" in out and "<- peak" in out
+    act1 = [float(m) for m in re.findall(r"lam =\s+[\d.]+\s+score\s+(-?[\d.]+) dB",
+                                         out.split("Act 2")[0])]
+    peak = max(float(m) for m in re.findall(r"score\s+(-?[\d.]+) dB(?=\s+<- peak)", out))
+    assert peak > max(act1) + 10, f"peak {peak} not clearly above flat sweep {max(act1)}"

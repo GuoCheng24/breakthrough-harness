@@ -44,7 +44,7 @@
 | [`harness/`](harness/CHECKLIST.md) | 评分引擎建造清单,含**反作弊四件套**:零模型踩地板;指标口径钉死并双报;校准/评估物理分离;基线荒谬即冻结 |
 | [`gates/`](gates/GATES.md) | 立项闸门:靶子三问、**主张极性红线**、占位核查读到 claim 层 |
 | [`rules/`](rules/RULES.md) | 十条工程铁则,**每条附上它的真实学费** |
-| [`examples/`](examples/) | 上面那个可运行演示 |
+| [`examples/`](examples/) | 两个可运行演示:上面的作弊者,以及「平坦的扫描在说谎」(force_balance.py,规则 3 的现场版) |
 | [`adapters/`](adapters/) | 接入**你的**技术栈——见下 |
 
 ## 接进你的 agent,不挑框架
@@ -53,11 +53,15 @@
 
 | 你的技术栈 | 这样做 |
 |---|---|
-| **任何读 `AGENTS.md` 的工具**——含 **DeepSeek Harness**(DSH 官方的 agent 指令文件就是 `AGENTS.md`)、Codex、Cursor、Jules、Amp… | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
+| **任何读 `AGENTS.md` 的工具**——含 **DeepSeek Harness**(DSH 官方的 agent 指令文件就是 `AGENTS.md`)、**OpenAI Codex**、Cursor、Jules、Amp… | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
 | **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc 你的项目/.cursor/rules/` |
 | **GitHub Copilot** | 把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
-| **其它一切**(裸 API、LangChain、自研循环、或者你本人) | 粘贴 [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
+| **Gemini CLI** | 把 [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) 拷进项目根目录为 `GEMINI.md` |
+| **Windsurf** | `cp adapters/windsurf/breakthrough-loop.md 你的项目/.windsurf/rules/` |
+| **Cline** | `cp adapters/cline/breakthrough-loop.md 你的项目/.clinerules/` |
+| **Aider** | 保存 [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md),用 `aider --read CONVENTIONS.md` 启动 |
+| **其它一切**(OpenAI/Gemini/Anthropic 裸 API、LangChain、自研循环、或者你本人) | 粘贴 [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
 
 ## 快速开始
 

@@ -1,9 +1,7 @@
-# AGENTS.md template — breakthrough-loop discipline
+# Breakthrough-loop discipline (Cline rules)
 
-Copy this file into your project root as `AGENTS.md` (the cross-tool agent
-instruction standard read by DeepSeek Harness, OpenAI Codex, Cursor, Jules, Amp and others), or merge
-the sections into an existing one. Full methodology:
-https://github.com/GuoCheng24/breakthrough-harness
+Copy this file into `.clinerules/` in your project (or paste it into a single
+`.clinerules` file). Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 ## Research discipline for this project
 

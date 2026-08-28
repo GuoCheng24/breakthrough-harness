@@ -53,7 +53,7 @@ sliding stops.**
 | [`harness/`](harness/CHECKLIST.md) | Building a scoring harness, incl. the **anti-cheat four**: null models on the floor; metric conventions pinned & double-reported; calibration/evaluation physically separated; absurd baseline ⇒ freeze everything |
 | [`gates/`](gates/GATES.md) | Go/no-go gates: target triage, the **claim-polarity red line**, occupancy checks at claim level |
 | [`rules/`](rules/RULES.md) | Ten engineering rules, **each ending with the real failure that paid for it** |
-| [`examples/`](examples/) | The runnable demo above |
+| [`examples/`](examples/) | Two runnable demos: the cheater above, and "the flat sweep that lied" (force_balance.py, rule 3 live) |
 | [`adapters/`](adapters/) | Drop-ins for **your** stack — see below |
 
 ## Use it with your agent, whatever it is
@@ -63,11 +63,15 @@ adapters just package it for wherever your agent reads instructions:
 
 | Your stack | Do this |
 |---|---|
-| **Any tool reading `AGENTS.md`** — incl. **DeepSeek Harness** (its official agent instruction file *is* `AGENTS.md`), Codex, Cursor, Jules, Amp, … | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
+| **Any tool reading `AGENTS.md`** — incl. **DeepSeek Harness** (its official agent instruction file *is* `AGENTS.md`), **OpenAI Codex**, Cursor, Jules, Amp, … | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
 | **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc your-project/.cursor/rules/` |
 | **GitHub Copilot** | merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
-| **Anything else** (raw API, LangChain, custom loop, a human) | paste [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
+| **Gemini CLI** | copy [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) into your project root as `GEMINI.md` |
+| **Windsurf** | `cp adapters/windsurf/breakthrough-loop.md your-project/.windsurf/rules/` |
+| **Cline** | `cp adapters/cline/breakthrough-loop.md your-project/.clinerules/` |
+| **Aider** | save [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md) and launch `aider --read CONVENTIONS.md` |
+| **Anything else** (OpenAI/Gemini/Anthropic raw API, LangChain, custom loop, a human) | paste [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
 
 ## Quick start
 

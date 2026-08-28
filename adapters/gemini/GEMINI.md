@@ -1,9 +1,8 @@
-# AGENTS.md template — breakthrough-loop discipline
+# GEMINI.md — breakthrough-loop discipline (Gemini CLI)
 
-Copy this file into your project root as `AGENTS.md` (the cross-tool agent
-instruction standard read by DeepSeek Harness, OpenAI Codex, Cursor, Jules, Amp and others), or merge
-the sections into an existing one. Full methodology:
-https://github.com/GuoCheng24/breakthrough-harness
+Copy this file into your project root as `GEMINI.md` (Gemini CLI's project
+context file), or merge the sections into an existing one.
+Full methodology: https://github.com/GuoCheng24/breakthrough-harness
 
 ## Research discipline for this project
 

@@ -1,0 +1,26 @@
+---
+description: Research discipline - breakthrough loop with an un-foolable harness
+alwaysApply: false
+---
+# Breakthrough-loop discipline (drop into .cursor/rules/)
+Full methodology: https://github.com/GuoCheng24/breakthrough-harness
+
+When running research experiments in this project:
+- Triage the target first: cheap scoring function + existing groundwork +
+  externally recognisable win. Any missing -> flag it and stop.
+- Build the harness before the method: single evaluation entry point;
+  null models scored first and pinned to the floor; metric conventions pinned
+  (double-report if the published one differs); calibration and evaluation
+  data physically separated - tuning touches calibration only.
+- Reproduce a published baseline number before trusting ours; an unmatched
+  baseline means the recipe has unread layers (optimizer, loss, metric
+  convention, operator).
+- Loop: 10-30 variants/round each with a one-line reason it might win;
+  sanity-check before entry; executors only call the entry point, never
+  write method code inline; select on calibration; confirm top-k held-out.
+  Unreproduced gains do not exist. Persist numbers to disk, then write.
+- Claim polarity: the main sentence of any result is constructive
+  ("we propose X, it solves Y, number Z"); audits and negatives are
+  supporting material, never the headline.
+- Verify every new guard by deliberately breaking what it watches, and
+  confirm it fails for the right reason.

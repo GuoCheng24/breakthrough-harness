@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If this methodology helped your research workflow, please cite it."
+title: "breakthrough-harness: make your research agent hard to fool"
+authors:
+  - family-names: Cheng
+    given-names: Guo
+    orcid: "https://orcid.org/0009-0006-7813-0114"
+repository-code: "https://github.com/GuoCheng24/breakthrough-harness"
+license: MIT
+keywords:
+  - agentic research
+  - research workflow
+  - evaluation harness
+  - scientific rigor

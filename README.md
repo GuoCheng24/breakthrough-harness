@@ -1,17 +1,30 @@
 # breakthrough-harness
 
+[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+
 **Make your research agent hard to fool — starting with itself.**
 
-[中文版](README.zh-CN.md) · MIT · pure methodology + one runnable demo · no framework lock-in
+[中文版](README.zh-CN.md) · works with any agent stack · pure methodology + one runnable demo
+
+```text
+calibration sweep (tuning allowed here only)          held-out confirmation (tuning never)
+   240.00 dB  CHEATER    <- tops the ranking             CHEATER    240.00 ->  -1.34  COLLAPSED
+    23.31 dB  ista 5e-2                                  ista 5e-2   23.31 ->  22.31  REPRODUCED
+    16.99 dB  ista 2e-2                                  ista 2e-2   16.99 ->  14.87  REPRODUCED
+    -0.00 dB  null: zeros  <- the floor, where it belongs
+```
+
+That is `python examples/toy_loop.py` (< 30 s, numpy only): a candidate that
+secretly fits the calibration answers looks like a breakthrough, and the
+held-out confirmation executes it. **This half screen is the entire
+philosophy of the repository.**
 
 Most agent harnesses teach an agent how to work. This one teaches a research
-agent how **not to deceive itself** — because in research, the failure mode is
+agent how **not to deceive itself** — because in research the failure mode is
 rarely "the code crashed" and almost always "the number looked great and was
-wrong."
-
-Every rule in this repository was paid for by a real failure. None of them is
-hypothetical. The repository that follows its own rules: the numbers quoted in
-this README are checked by `tests/` on every push.
+wrong." Every rule here was paid for by a real failure; none is hypothetical.
+The repository follows its own rules: what these pages claim, `tests/` checks
+on every push.
 
 ## The core claim
 
@@ -19,38 +32,50 @@ this README are checked by `tests/` on every push.
 > breakthrough ≈ many cheap attempts × a scoring function that cannot be fooled.
 
 Serial, hand-crafted experiments produce a few dozen attempts per year; the
-systems that actually produced constructive breakthroughs (program-search over
-math constructions, tournament-style hypothesis engines) all share one
-skeleton: **parallel cheap generation + automated un-foolable selection**.
-A solo researcher with one GPU cannot copy their scale — but can copy the
-skeleton, if the scoring function is engineered with the same rigor a referee
-would apply. That engineering is this repository.
+systems that actually produced constructive breakthroughs (program search
+over mathematical constructions, tournament-style hypothesis engines) share
+one skeleton: **parallel cheap generation + automated un-foolable selection**.
+You cannot copy their compute; you can copy the skeleton — if the scoring
+function is engineered with the rigor a referee would apply. That engineering
+is this repository.
+
+And a quieter corollary: when every attempt is expensive, the rational move
+is to audit what exists rather than build what might fail — audits have
+guaranteed deliverables. Teams that keep sliding into negative-result papers
+are responding rationally to the price of an attempt. **Fix the price and the
+sliding stops.**
 
 ## What is inside
 
 | Directory | What it gives you |
 |---|---|
 | [`loop/`](loop/LOOP.md) | The breakthrough loop: generate-with-reasons → parallel sweep → select on calibration → **confirm on held-out** |
-| [`harness/`](harness/CHECKLIST.md) | How to build a scoring harness, including the **anti-cheat four**: null models must score like null models; metric conventions pinned and double-reported; calibration/evaluation data physically separated; an absurd baseline score freezes all conclusions |
-| [`gates/`](gates/GATES.md) | Go/no-go gates: the three-question target triage, the **claim-polarity red line** ("we propose X and it wins" vs "we audited X and it fails"), occupancy checks done at claim level |
-| [`rules/`](rules/RULES.md) | Engineering rules with the tuition that bought each one |
-| [`examples/`](examples/) | A self-contained toy run of the full loop — watch the harness catch a cheating candidate and a calibration-overfit gain, in seconds, pure numpy |
-| [`skills/`](skills/) | A drop-in skill template for Claude Code (`.claude/skills/`) so your agent carries the loop into every session |
+| [`harness/`](harness/CHECKLIST.md) | Building a scoring harness, incl. the **anti-cheat four**: null models on the floor; metric conventions pinned & double-reported; calibration/evaluation physically separated; absurd baseline ⇒ freeze everything |
+| [`gates/`](gates/GATES.md) | Go/no-go gates: target triage, the **claim-polarity red line**, occupancy checks at claim level |
+| [`rules/`](rules/RULES.md) | Ten engineering rules, **each ending with the real failure that paid for it** |
+| [`examples/`](examples/) | The runnable demo above |
+| [`adapters/`](adapters/) | Drop-ins for **your** stack — see below |
+
+## Use it with your agent, whatever it is
+
+The methodology is plain markdown — nothing here depends on any vendor. The
+adapters just package it for wherever your agent reads instructions:
+
+| Your stack | Do this |
+|---|---|
+| **Any tool reading `AGENTS.md`** (Codex, Cursor, Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
+| **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
+| **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc your-project/.cursor/rules/` |
+| **GitHub Copilot** | merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
+| **Anything else** (raw API, LangChain, custom loop, a human) | paste [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
 
 ## Quick start
 
 ```bash
 git clone https://github.com/GuoCheng24/breakthrough-harness
 cd breakthrough-harness
-python examples/toy_loop.py     # < 30 s, no dependencies beyond numpy
+python examples/toy_loop.py     # < 30 s, numpy only
 ```
-
-The demo runs one full turn of the loop on a synthetic sparse-recovery
-problem: 12 candidate methods are scored in parallel on a calibration set; one
-of them cheats (it secretly fits the calibration answers) and tops the
-calibration ranking; the held-out confirmation demotes it to last place, and
-the null models sit exactly where null models belong. That half page of output
-is the entire philosophy of this repository.
 
 ## The five habits, in one screen
 
@@ -62,24 +87,24 @@ is the entire philosophy of this repository.
    exist.
 3. **A baseline you cannot beat is a recipe you have not finished reading.**
    Published baselines hide layers: the optimizer, the loss, the metric
-   convention, the operator. Read until your reproduction matches; only then
-   are your improvements real.
+   convention, the operator. Read until your reproduction matches.
 4. **Claims have a polarity.** The main sentence of a result must be
    constructive — "we propose X, it solves Y, the number is Z." Audit output
-   (ablations, robustness, honest scope) supports the claim; it is never the
-   claim.
-5. **Every guard must be shown to fail.** A check that was never seen to fire
-   on a deliberately broken input is not a check — several of the guards in
-   this repository were themselves caught silently passing before this rule
-   existed.
+   supports the claim; it is never the claim.
+5. **Every guard must be shown to fail.** A check never seen firing on a
+   deliberately broken input is decoration — guards in this very repository
+   were caught silently passing before this rule existed.
 
-## What this is not
+## What this is, and is not
 
-Not an orchestration framework, not a wrapper around any model API, not a
-benchmark. It is the missing discipline layer that plugs into whatever agent
-stack you already run. If you use Claude Code, `skills/` drops straight in;
-if you use anything else, `loop/`, `harness/`, `gates/` and `rules/` are
-plain markdown and a numpy file.
+| | Orchestration frameworks | **breakthrough-harness** |
+|---|---|---|
+| Teaches the agent | how to work | how **not to fool itself** |
+| Form | runtime / SDK | plain markdown + one numpy file |
+| Lock-in | their stack | none — adapters for every stack |
+| Guards | agent capability | **scientific validity** of what the agent reports |
+
+It plugs into whatever you already run. It replaces nothing.
 
 ## License
 

@@ -77,3 +77,32 @@ def test_rules_each_carry_tuition():
     rules = len(re.findall(r"^## \d+\.", text, re.M))
     tuitions = text.count("*Tuition:")
     assert rules == tuitions >= 8, f"{rules} rules but {tuitions} tuition notes"
+
+
+def test_every_adapter_carries_the_core_concepts():
+    """Five concepts define the methodology; an adapter missing one is a
+    different methodology wearing our name. Anchored on stable phrases."""
+    concepts = ["null model", "calibration", "held-out", "entry point", "propose"]
+    adapters = [ROOT / "adapters" / "AGENTS.md",
+                ROOT / "adapters" / "SYSTEM_PROMPT.md",
+                ROOT / "adapters" / "cursor" / "breakthrough-loop.mdc",
+                ROOT / "adapters" / "copilot" / "copilot-instructions.md",
+                ROOT / "adapters" / "claude-code" / "breakthrough-loop" / "SKILL.md"]
+    bad = []
+    for a in adapters:
+        assert a.exists(), f"adapter missing: {a}"
+        text = a.read_text(encoding="utf-8").lower()
+        for c in concepts:
+            if c not in text:
+                bad.append(f"{a.relative_to(ROOT)}: missing '{c}'")
+    assert not bad, "\n".join(bad)
+
+
+def test_readme_adapter_table_matches_the_files():
+    for name in ("README.md", "README.zh-CN.md"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        for path in ("adapters/AGENTS.md", "adapters/SYSTEM_PROMPT.md",
+                     "adapters/cursor/breakthrough-loop.mdc",
+                     "adapters/copilot/copilot-instructions.md",
+                     "adapters/claude-code/breakthrough-loop"):
+            assert path in text, f"{name} does not mention {path}"

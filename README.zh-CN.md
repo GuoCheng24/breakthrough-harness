@@ -1,14 +1,27 @@
 # breakthrough-harness
 
+[![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+
 **让你的科研 agent 难以被欺骗——首先是难以被它自己欺骗。**
 
-[English](README.md) · MIT · 纯方法论 + 一个可运行演示 · 不绑定任何框架
+[English](README.md) · 任何 agent 技术栈皆可用 · 纯方法论 + 一个可运行演示
+
+```text
+校准集扫描(只许在这里调参)                     留出集确认(永不调参)
+   240.00 dB  作弊者      <- 排名登顶              作弊者      240.00 ->  -1.34  崩塌
+    23.31 dB  ista 5e-2                            ista 5e-2    23.31 ->  22.31  复现
+    16.99 dB  ista 2e-2                            ista 2e-2    16.99 ->  14.87  复现
+    -0.00 dB  零模型      <- 踩在地板上,理应如此
+```
+
+这就是 `python examples/toy_loop.py`(30 秒内,只依赖 numpy):一个偷偷拟合了
+校准集答案的候选看起来像个突破,留出集确认当场处决它。**这半屏输出就是整个
+仓库的哲学。**
 
 市面上的 agent harness 教 agent 怎么干活;这个仓库教科研 agent **怎么不骗自己**——
 因为科研里的失败极少是"代码崩了",几乎总是"数字看起来很棒,但它是错的"。
-
-仓库里的每一条规则都由一次真实的失败付过学费,没有一条是想象出来的。
-它也遵守自己的规则:README 引用的数字由 `tests/` 在每次推送时检查。
+每条规则都由真实失败付过学费;它也遵守自己的规则:页面所声称的,`tests/` 在每次
+推送时检查。
 
 ## 核心主张
 
@@ -16,55 +29,62 @@
 > 突破 ≈ 大量廉价尝试 × 一个骗不过去的评分函数
 
 串行手工实验一年只有几十次尝试;真正产出过构造性突破的系统(数学构造的程序搜索、
-锦标赛式假设引擎)全都共享一副骨架:**并行廉价生成 + 自动化的、不可被钻空子的筛选**。
-个人研究者复制不了它们的算力,但可以复制骨架——前提是评分函数按审稿人的严格程度来
-建造。这份建造工艺,就是这个仓库。
+锦标赛式假设引擎)共享一副骨架:**并行廉价生成 + 自动化的不可欺骗筛选**。
+你复制不了它们的算力,但可以复制骨架——前提是评分函数按审稿人的严格程度建造。
 
-还有一个更安静的原因:当每次尝试都很贵,理性的选择永远是审计已有的东西而不是建造
-可能失败的东西——审计有保证的交付物,建造没有。总是"滑向阴性结果论文"的团队不是
-不自律,是在对尝试的价格做理性反应。**把价格修好,滑坡自然停。**
+还有一个更安静的推论:当每次尝试都很贵,理性选择永远是审计已有的而不是建造可能
+失败的——审计有保证的交付物。总在"滑向阴性结果论文"的团队不是不自律,是在对
+尝试的价格做理性反应。**把价格修好,滑坡自然停。**
 
 ## 内容
 
 | 目录 | 提供什么 |
 |---|---|
 | [`loop/`](loop/LOOP.md) | 突破循环:带理由生成 → 并行扫描 → 校准集选择 → **留出集确认** |
-| [`harness/`](harness/CHECKLIST.md) | 评分引擎建造清单,含**反作弊四件套**:零模型必须得零模型的分;指标口径钉死并双报;校准/评估数据物理分离;基线分数荒谬即冻结一切结论 |
-| [`gates/`](gates/GATES.md) | 立项闸门:靶子三问、**主张极性红线**("我们提出 X 且它赢了" vs "我们审计发现 X 不行")、占位核查要读到 claim 层 |
-| [`rules/`](rules/RULES.md) | 工程铁则,每条附上它的学费 |
-| [`examples/`](examples/) | 完整循环的玩具演示——亲眼看 harness 抓住一个作弊候选和一个校准过拟合,纯 numpy,几秒跑完 |
-| [`skills/`](skills/) | Claude Code 即插 skill 模板(放进 `.claude/skills/` 即用) |
+| [`harness/`](harness/CHECKLIST.md) | 评分引擎建造清单,含**反作弊四件套**:零模型踩地板;指标口径钉死并双报;校准/评估物理分离;基线荒谬即冻结 |
+| [`gates/`](gates/GATES.md) | 立项闸门:靶子三问、**主张极性红线**、占位核查读到 claim 层 |
+| [`rules/`](rules/RULES.md) | 十条工程铁则,**每条附上它的真实学费** |
+| [`examples/`](examples/) | 上面那个可运行演示 |
+| [`adapters/`](adapters/) | 接入**你的**技术栈——见下 |
+
+## 接进你的 agent,不挑框架
+
+方法论本体是纯 markdown,不依赖任何厂商。适配器只是把它装进你的 agent 读指令的地方:
+
+| 你的技术栈 | 这样做 |
+|---|---|
+| **任何读 `AGENTS.md` 的工具**(Codex、Cursor、Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
+| **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
+| **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc 你的项目/.cursor/rules/` |
+| **GitHub Copilot** | 把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
+| **其它一切**(裸 API、LangChain、自研循环、或者你本人) | 粘贴 [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
 
 ## 快速开始
 
 ```bash
 git clone https://github.com/GuoCheng24/breakthrough-harness
 cd breakthrough-harness
-python examples/toy_loop.py     # < 30 秒,只依赖 numpy
+python examples/toy_loop.py     # 30 秒内,只依赖 numpy
 ```
-
-演示在一个合成稀疏恢复问题上跑完整一轮循环:12 个候选并行评分;其中一个作弊者
-(偷偷拟合了校准集答案)在校准排名登顶;留出集确认把它打回垫底,而零模型稳稳踩在
-地板上。那半页输出就是这个仓库的全部哲学。
 
 ## 五个习惯,一屏说完
 
 1. **先跑零模型。** 相信任何分数之前,先问"一个什么都没学的方法会得几分"。
-   管线分不出它们,就先修管线,再做实验。
-2. **校准与评估永不接触。** 在一组文件上调参,在另一组上报数。
-   留出集上不复现的增益不存在。
-3. **打不过的基线 = 没读完的配方。** 已发表基线藏着层层细节:优化器、损失、
-   指标口径、算子。读到你的复现对上数字为止——那之后你的改进才是真的。
-4. **主张有极性。** 成果的主句必须是构造性的:"我们提出 X,解决 Y,数字是 Z"。
-   审计产出(消融、稳健性、诚实边界)为主张辩护,但永远不是主张本身。
-5. **每个守卫都要亲眼看它失败一次。** 没在故意破坏下触发过的检查只是装饰——
-   本方法论的源头仓库里,有守卫自己就曾静默假通过。
+2. **校准与评估永不接触。** 留出集上不复现的增益不存在。
+3. **打不过的基线 = 没读完的配方。** 优化器、损失、指标口径、算子——层层都会动数字。
+4. **主张有极性。** 主句必须是"我们提出 X,解决 Y,数字是 Z";审计产出只作支撑。
+5. **每个守卫都要亲眼看它失败一次。** 没触发过的检查只是装饰。
 
-## 这不是什么
+## 这是什么,不是什么
 
-不是编排框架,不是模型 API 封装,不是 benchmark。它是缺失的那层纪律,
-插进你已有的任何 agent 技术栈。用 Claude Code 的直接放 `skills/`;
-用别家的,`loop/`、`harness/`、`gates/`、`rules/` 就是普通 markdown 加一个 numpy 文件。
+| | 编排框架 | **breakthrough-harness** |
+|---|---|---|
+| 教 agent | 怎么干活 | 怎么**不骗自己** |
+| 形态 | 运行时 / SDK | 纯 markdown + 一个 numpy 文件 |
+| 绑定 | 各自技术栈 | 零绑定——各栈都有适配器 |
+| 守护的是 | agent 的能力 | agent 报告内容的**科学有效性** |
+
+它插进你已有的任何东西,不替代任何东西。
 
 ## 许可
 

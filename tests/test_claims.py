@@ -166,3 +166,16 @@ def test_generated_adapters_do_not_drift():
     r = subprocess.run([sys.executable, str(ROOT / "adapters" / "build.py"), "--check"],
                        capture_output=True, text=True, timeout=60)
     assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_readme_visuals_exist_and_are_generated():
+    """Both READMEs embed the demo gif and loop diagram; the assets and their
+    reproducible generators must exist."""
+    for name in ("README.md", "README.zh-CN.md"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        assert ".github/assets/demo.gif" in text, f"{name} missing demo.gif"
+        assert ".github/assets/loop-diagram.png" in text, f"{name} missing diagram"
+    for asset in ("demo.gif", "loop-diagram.png", "make_demo_gif.py",
+                  "make_loop_diagram.py", "social-preview.png",
+                  "make_social_preview.py"):
+        assert (ROOT / ".github" / "assets" / asset).exists(), f"missing {asset}"

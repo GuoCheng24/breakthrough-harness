@@ -6,13 +6,7 @@
 
 [中文版](README.zh-CN.md) · works with any agent stack · pure methodology + two runnable demos
 
-```text
-calibration sweep (tuning allowed here only)          held-out confirmation (tuning never)
-   240.00 dB  CHEATER    <- tops the ranking             CHEATER    240.00 ->  -1.34  COLLAPSED
-    23.31 dB  ista 5e-2                                  ista 5e-2   23.31 ->  22.31  REPRODUCED
-    16.99 dB  ista 2e-2                                  ista 2e-2   16.99 ->  14.87  REPRODUCED
-    -0.00 dB  null: zeros  <- the floor, where it belongs
-```
+![The demo: a cheater tops the calibration ranking and collapses on held-out data, while null models sit on the floor](.github/assets/demo.gif)
 
 That is `python examples/toy_loop.py` (< 30 s, numpy only): a candidate that
 secretly fits the calibration answers looks like a breakthrough, and the
@@ -44,6 +38,8 @@ is to audit what exists rather than build what might fail — audits have
 guaranteed deliverables. Teams that keep sliding into negative-result papers
 are responding rationally to the price of an attempt. **Fix the price and the
 sliding stops.**
+
+![The loop: generate, sweep, select on calibration; confirm on held-out across the line tuning never crosses; every failure becomes a new harness check](.github/assets/loop-diagram.png)
 
 ## What is inside
 

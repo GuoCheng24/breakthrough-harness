@@ -53,7 +53,9 @@
 
 | 你的技术栈 | 这样做 |
 |---|---|
-| **任何读 `AGENTS.md` 的工具**——含 **DeepSeek Harness**(DSH 官方的 agent 指令文件就是 `AGENTS.md`)、**OpenAI Codex**、Cursor、Jules、Amp… | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
+| **DeepSeek Harness** | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录——DSH 原生读 `AGENTS.md`,无需其它配置 |
+| **OpenAI Codex** | 同一个文件:把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(Codex 读 `AGENTS.md`) |
+| **其它读 `AGENTS.md` 的工具**(Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
 | **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc 你的项目/.cursor/rules/` |
 | **GitHub Copilot** | 把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |

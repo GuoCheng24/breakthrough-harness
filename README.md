@@ -63,7 +63,9 @@ adapters just package it for wherever your agent reads instructions:
 
 | Your stack | Do this |
 |---|---|
-| **Any tool reading `AGENTS.md`** — incl. **DeepSeek Harness** (its official agent instruction file *is* `AGENTS.md`), **OpenAI Codex**, Cursor, Jules, Amp, … | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
+| **DeepSeek Harness** | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root — DSH reads `AGENTS.md` natively, nothing else to configure |
+| **OpenAI Codex** | same file: copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (Codex reads `AGENTS.md`) |
+| **Any other `AGENTS.md` tool** (Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
 | **Claude Code** | `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `cp adapters/cursor/breakthrough-loop.mdc your-project/.cursor/rules/` |
 | **GitHub Copilot** | merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |

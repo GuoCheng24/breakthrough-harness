@@ -179,3 +179,16 @@ def test_readme_visuals_exist_and_are_generated():
                   "make_loop_diagram.py", "social-preview.png",
                   "make_social_preview.py"):
         assert (ROOT / ".github" / "assets" / asset).exists(), f"missing {asset}"
+
+
+def test_template_is_actually_runnable():
+    """The campaign starter must run a full round and pass its own guards."""
+    tpl = ROOT / "template"
+    r = subprocess.run([sys.executable, str(tpl / "run_round.py")],
+                       capture_output=True, text=True, timeout=300, cwd=tpl)
+    assert r.returncode == 0 and "REPRODUCED" in r.stdout, r.stderr
+    r = subprocess.run([sys.executable, "-m", "pytest", "test_guards.py", "-q"],
+                       capture_output=True, text=True, timeout=300, cwd=tpl)
+    assert r.returncode == 0, r.stdout + r.stderr
+    for junk in ("heldout_access.jsonl", "ledger.jsonl"):
+        (tpl / junk).unlink(missing_ok=True)

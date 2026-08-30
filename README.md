@@ -51,6 +51,20 @@ sliding stops.**
 | [`rules/`](rules/RULES.md) | Ten engineering rules, **each ending with the real failure that paid for it** |
 | [`examples/`](examples/) | Two runnable demos: the cheater above, and "the flat sweep that lied" (force_balance.py, rule 3 live) |
 | [`adapters/`](adapters/) | Drop-ins for **your** stack — see below |
+| [`template/`](template/) | **A runnable campaign starter**: entry-point harness with registered nulls and a live freeze rule, logged held-out access, a round ledger, and guards with a deliberate-violation test — adapt it to your task in an afternoon |
+
+## The other demo: the flat sweep that lied
+
+```text
+Act 1  lam in {0.1, 1, 10, 100}   -> scores 2.1, -0.0, -0.0, -0.0   "flat, the parameter is inert"
+Act 2  one gradient-norm evaluation -> every value crushed the data term; balance is ~0.05
+Act 3  sweep around the balance    -> clean interior peak at lam = 0.0015, 22.6 dB
+```
+
+`python examples/force_balance.py`: a four-decade hyperparameter sweep that
+looks flat because the data term is a *mean* and the regulariser a *sum* —
+every tested value sat on one side of the force balance. One gradient-norm
+evaluation finds the real range. Rule 3, live.
 
 ## Use it with your agent, whatever it is
 

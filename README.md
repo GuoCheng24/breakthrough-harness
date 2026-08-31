@@ -78,7 +78,7 @@ adapters just package it for wherever your agent reads instructions:
 | **Any other `AGENTS.md` tool** (Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` then `/plugin install breakthrough-harness@breakthrough-harness` — or manually `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `mkdir -p your-project/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
-| **GitHub Copilot** | merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
+| **GitHub Copilot** | one click: [install the Research Harness Engineer agent](https://aka.ms/awesome-copilot/install/agent?url=vscode%3Achat-agent%2Finstall%3Furl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fgithub%2Fawesome-copilot%2Fmain%2Fagents%2Fresearch-harness-engineer.agent.md) from GitHub's own [awesome-copilot](https://github.com/github/awesome-copilot) collection — or merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
 | **Gemini CLI** | copy [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) into your project root as `GEMINI.md` |
 | **Windsurf** | `mkdir -p your-project/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
 | **Cline** | `mkdir -p your-project/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |

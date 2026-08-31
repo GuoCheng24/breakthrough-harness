@@ -67,7 +67,7 @@
 | **其它读 `AGENTS.md` 的工具**(Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` 后 `/plugin install breakthrough-harness@breakthrough-harness`——或手动 `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `mkdir -p 你的项目/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
-| **GitHub Copilot** | 把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
+| **GitHub Copilot** | 一键安装:从 GitHub 官方的 [awesome-copilot](https://github.com/github/awesome-copilot) 收录中[装 Research Harness Engineer agent](https://aka.ms/awesome-copilot/install/agent?url=vscode%3Achat-agent%2Finstall%3Furl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fgithub%2Fawesome-copilot%2Fmain%2Fagents%2Fresearch-harness-engineer.agent.md)——或把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
 | **Gemini CLI** | 把 [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) 拷进项目根目录为 `GEMINI.md` |
 | **Windsurf** | `mkdir -p 你的项目/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
 | **Cline** | `mkdir -p 你的项目/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |

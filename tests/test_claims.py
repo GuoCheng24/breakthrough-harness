@@ -108,6 +108,12 @@ def test_rules_each_carry_tuition():
     rules = len(re.findall(r"^## \d+\.", text, re.M))
     tuitions = text.count("*Tuition:")
     assert rules == tuitions >= 8, f"{rules} rules but {tuitions} tuition notes"
+    # The count is quoted in both READMEs - pin it so prose cannot drift from the file.
+    for name, pat in (("README.md", r"(\d+) engineering rules"),
+                      ("README.zh-CN.md", r"(\d+) 条工程铁则")):
+        m = re.search(pat, (ROOT / name).read_text(encoding="utf-8"))
+        assert m, f"{name} no longer states the rule count"
+        assert int(m.group(1)) == rules, f"{name} says {m.group(1)} rules, RULES.md has {rules}"
 
 
 def test_every_adapter_carries_the_core_concepts():

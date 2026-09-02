@@ -48,7 +48,7 @@ sliding stops.**
 | [`loop/`](loop/LOOP.md) | The breakthrough loop: generate-with-reasons → parallel sweep → select on calibration → **confirm on held-out** |
 | [`harness/`](harness/CHECKLIST.md) | Building a scoring harness, incl. the **anti-cheat four**: null models on the floor; metric conventions pinned & double-reported; calibration/evaluation physically separated; absurd baseline ⇒ freeze everything |
 | [`gates/`](gates/GATES.md) | Go/no-go gates: target triage, the **claim-polarity red line**, occupancy checks at claim level |
-| [`rules/`](rules/RULES.md) | Ten engineering rules, **each ending with the real failure that paid for it** |
+| [`rules/`](rules/RULES.md) | 11 engineering rules, **each ending with the real failure that paid for it** |
 | [`examples/`](examples/) | Two runnable demos: the cheater above, and "the flat sweep that lied" (force_balance.py, rule 3 live) |
 | [`adapters/`](adapters/) | Drop-ins for **your** stack — see below |
 | [`template/`](template/) | **A runnable campaign starter**: entry-point harness with registered nulls and a live freeze rule, logged held-out access, a round ledger, and guards with a deliberate-violation test — adapt it to your task in an afternoon |

@@ -39,7 +39,7 @@
 | [`loop/`](loop/LOOP.md) | 突破循环:带理由生成 → 并行扫描 → 校准集选择 → **留出集确认** |
 | [`harness/`](harness/CHECKLIST.md) | 评分引擎建造清单,含**反作弊四件套**:零模型踩地板;指标口径钉死并双报;校准/评估物理分离;基线荒谬即冻结 |
 | [`gates/`](gates/GATES.md) | 立项闸门:靶子三问、**主张极性红线**、占位核查读到 claim 层 |
-| [`rules/`](rules/RULES.md) | 十条工程铁则,**每条附上它的真实学费** |
+| [`rules/`](rules/RULES.md) | 11 条工程铁则,**每条附上它的真实学费** |
 | [`examples/`](examples/) | 两个可运行演示:上面的作弊者,以及「平坦的扫描在说谎」(force_balance.py,规则 3 的现场版) |
 | [`adapters/`](adapters/) | 接入**你的**技术栈——见下 |
 | [`template/`](template/) | **可直接跑的 campaign 起步模板**:带零模型与实时冻结规则的入口 harness、留出集访问日志、轮次台账、含故意破坏测试的守卫——一个下午即可改造成你的任务 |

@@ -3,6 +3,7 @@
 **Make your research agent hard to fool — starting with itself.**
 
 [![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+[![in github/awesome-copilot](https://img.shields.io/badge/in-github%2Fawesome--copilot-1f6feb?logo=github&logoColor=white)](https://github.com/github/awesome-copilot/blob/main/agents/research-harness-engineer.agent.md)
 
 [中文版](README.zh-CN.md) · works with any agent stack · pure methodology + two runnable demos
 

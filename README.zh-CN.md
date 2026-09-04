@@ -3,6 +3,7 @@
 **让你的科研 agent 难以被欺骗——首先是难以被它自己欺骗。**
 
 [![checks](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml/badge.svg)](https://github.com/GuoCheng24/breakthrough-harness/actions/workflows/test.yml) [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![deps](https://img.shields.io/badge/deps-numpy%20only-blue)](examples/toy_loop.py)
+[![已收入 github/awesome-copilot](https://img.shields.io/badge/%E5%B7%B2%E6%94%B6%E5%85%A5-github%2Fawesome--copilot-1f6feb?logo=github&logoColor=white)](https://github.com/github/awesome-copilot/blob/main/agents/research-harness-engineer.agent.md)
 
 [English](README.md) · 任何 agent 技术栈皆可用 · 纯方法论 + 两个可运行演示
 

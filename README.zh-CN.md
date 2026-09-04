@@ -62,7 +62,7 @@
 
 | 你的技术栈 | 这样做 |
 |---|---|
-| **DeepSeek Harness** | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(DSH 原生读 `AGENTS.md`)——或装成 DSH skill:`mkdir -p ~/.agents/skills && cp -r .agents/skills/breakthrough-loop $_` |
+| **DeepSeek Harness** | **无需拷贝** —— 克隆本仓, DSH 直接就能找到 [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md):它的文件系统 skill 提供者以 rank 200 扫描 `<项目根>/.agents/skills`。要用在你自己的项目里, 把那个目录拷过去, 或把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 放到项目根 —— DSH 的 `agent-instructions` 插件会加载它 |
 | **OpenAI Codex** | 同一个文件:把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(Codex 读 `AGENTS.md`) |
 | **其它读 `AGENTS.md` 的工具**(Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` 后 `/plugin install breakthrough-harness@breakthrough-harness`——或手动 `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |

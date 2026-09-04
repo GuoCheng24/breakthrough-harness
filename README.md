@@ -73,7 +73,7 @@ adapters just package it for wherever your agent reads instructions:
 
 | Your stack | Do this |
 |---|---|
-| **DeepSeek Harness** | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (DSH reads `AGENTS.md` natively) — or install as a DSH skill: `mkdir -p ~/.agents/skills && cp -r .agents/skills/breakthrough-loop $_` |
+| **DeepSeek Harness** | **nothing to copy** — clone this repo and DSH already finds [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md); its filesystem skill provider scans `<projectRoot>/.agents/skills` at rank 200. For your own project, copy that directory, or copy [`adapters/AGENTS.md`](adapters/AGENTS.md) to the project root, which DSH's `agent-instructions` plugin loads |
 | **OpenAI Codex** | same file: copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (Codex reads `AGENTS.md`) |
 | **Any other `AGENTS.md` tool** (Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` then `/plugin install breakthrough-harness@breakthrough-harness` — or manually `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |

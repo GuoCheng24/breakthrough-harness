@@ -133,18 +133,24 @@ It plugs into whatever you already run. It replaces nothing.
 The core claim is not folklore; the named systems and known failure modes:
 
 - **FunSearch** — Romera-Paredes et al., *Mathematical discoveries from
-  program search with large language models*, Nature 2023: program search +
-  automated evaluator producing new constructions (cap set, bin packing).
-- **AI Co-Scientist** — Gottweis et al., Google 2025-26: tournament-style
-  hypothesis generation/ranking with automated review.
-- **The reusable holdout** — Dwork et al., Science 2015: why repeated
-  consultation of a held-out set silently turns it into a calibration set
-  (the reason `loop/` gives held-out data a lifecycle and a budget).
-- **Test-set overfitting in practice** — Recht et al., ICML 2019 (*Do
-  ImageNet classifiers generalize to ImageNet?*): distribution of gains that
-  fail to transfer, measured at field scale.
-- **Deep learning tuning playbook** — Godbole et al., 2023: the
-  discipline of scientific vs. nuisance hyperparameters this repo's sweep
+  program search with large language models*, Nature 625, 468–475 (2024),
+  [doi:10.1038/s41586-023-06924-6](https://doi.org/10.1038/s41586-023-06924-6):
+  program search + automated evaluator producing new constructions (cap set,
+  bin packing).
+- **AI Co-Scientist** — Gottweis et al., *Accelerating scientific discovery
+  with Co-Scientist*, Google, [arXiv:2502.18864](https://arxiv.org/abs/2502.18864)
+  (2025): tournament-style hypothesis generation/ranking with automated review.
+- **The reusable holdout** — Dwork et al., Science 349, 636–638 (2015),
+  [doi:10.1126/science.aaa9375](https://doi.org/10.1126/science.aaa9375): why
+  repeated consultation of a held-out set silently turns it into a calibration
+  set (the reason `loop/` gives held-out data a lifecycle and a budget).
+- **Test-set overfitting in practice** — Recht et al., *Do ImageNet
+  classifiers generalize to ImageNet?*, ICML 2019,
+  [PMLR 97](https://proceedings.mlr.press/v97/recht19a.html): distribution of
+  gains that fail to transfer, measured at field scale.
+- **Deep learning tuning playbook** — Godbole et al., 2023,
+  [google-research/tuning_playbook](https://github.com/google-research/tuning_playbook):
+  the discipline of scientific vs. nuisance hyperparameters this repo's sweep
   rules descend from.
 
 ## License

@@ -18,3 +18,10 @@ jobs:
       - run: pip install numpy pytest
       - run: pytest tests/ -q
       - run: python examples/toy_loop.py
+      # The reference list once cited FunSearch as Nature 2023 (it is Nature 625, 2024).
+      # Weekly, resolve every identifier and compare the year and first author the
+      # page states with what Crossref and arXiv return. Not on push: network.
+      - if: github.event_name != 'push' && github.event_name != 'pull_request'
+        env:
+          REFERENCES_ONLINE: "1"
+        run: pytest tests/test_references.py -q

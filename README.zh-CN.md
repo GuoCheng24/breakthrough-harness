@@ -108,12 +108,14 @@ python examples/toy_loop.py     # 30 秒内,只依赖 numpy
 
 核心主张不是民间传说;点名的系统与已知失效模式:
 
-- **FunSearch**(Nature 2023)——程序搜索 + 自动评估器,产出数学新构造。
-- **AI Co-Scientist**(Google 2025-26)——锦标赛式假设生成/排名 + 自动评审。
-- **The reusable holdout**(Dwork 等, Science 2015)——反复咨询留出集为何会把它
+- **FunSearch**(Romera-Paredes 等, Nature 625, 468–475, 2024,
+  [doi:10.1038/s41586-023-06924-6](https://doi.org/10.1038/s41586-023-06924-6))——程序搜索 + 自动评估器,产出数学新构造。
+- **AI Co-Scientist**(Gottweis 等, Google, [arXiv:2502.18864](https://arxiv.org/abs/2502.18864), 2025)——锦标赛式假设生成/排名 + 自动评审。
+- **The reusable holdout**(Dwork 等, Science 349, 636–638, 2015,
+  [doi:10.1126/science.aaa9375](https://doi.org/10.1126/science.aaa9375))——反复咨询留出集为何会把它
   悄悄变成第二个校准集(`loop/` 给留出集设生命周期与预算的依据)。
-- **测试集过拟合实测**(Recht 等, ICML 2019)——领域尺度上测得的"增益不迁移"分布。
-- **Deep learning tuning playbook**(Godbole 等, 2023)——本仓库扫参规则的来源之一。
+- **测试集过拟合实测**(Recht 等, ICML 2019, [PMLR 97](https://proceedings.mlr.press/v97/recht19a.html))——领域尺度上测得的"增益不迁移"分布。
+- **Deep learning tuning playbook**(Godbole 等, 2023, [google-research/tuning_playbook](https://github.com/google-research/tuning_playbook))——本仓库扫参规则的来源之一。
 
 ## 许可
 

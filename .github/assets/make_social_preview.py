@@ -30,27 +30,28 @@ if len(ROWS) < 3:
 def chart(ax, accent):
     """A slope per candidate, calibration to held out.
 
-    The cheater's calibration score is 240 dB, two orders of magnitude off anything real, so
-    clamping it to the top of the scale is the honest way to show it - and the clamp is
-    labelled rather than silent. Clamping without a label put its name on top of the next
-    candidate's at 57% overlap, which sciglyph's checker caught.
+    Left-hand rows are on a fixed pitch rather than at their score's height: two of the three
+    calibration scores are close enough that a proportional layout put their labels on top of
+    each other. The slope still starts at the score, so the lines carry the comparison and
+    the labels stay readable.
     """
-    xa, xb = 5.55, 9.05
+    xa, xb = 5.85, 9.35
     lo, hi = -3.0, 27.0
 
     def Y(v):
-        return 1.28 + 2.00 * (min(max(v, lo), hi) - lo) / (hi - lo)
+        return 1.05 + 1.95 * (min(max(v, lo), hi) - lo) / (hi - lo)
 
-    ax.text(xa, 3.76, "calibration", fontsize=34, color="#55585c", family=SANS, ha="center")
-    ax.text(xb, 3.76, "held out", fontsize=34, color="#55585c", family=SANS, ha="center")
-    for name, calib, held in ROWS:
+    ax.text(xa, 3.58, "calibration", fontsize=34, color="#55585c", family=SANS, ha="center")
+    ax.text(xb, 3.58, "held out", fontsize=34, color="#55585c", family=SANS, ha="center")
+    pitch, top = 0.62, 3.10
+    for i, (name, calib, held) in enumerate(ROWS):
         cheat = held < 0
         colour = "#cf222e" if cheat else "#1a7f37"
-        y0 = 3.44 if calib > hi else Y(calib)          # off-scale scores ride above the axis
+        y0 = top - i * pitch
         ax.plot([xa, xb], [y0, Y(held)], color=colour, lw=5, zorder=3, solid_capstyle="round")
         ax.plot([xa, xb], [y0, Y(held)], "o", ms=14, color=colour, zorder=4)
-        label = f"CHEATER  {calib:.0f}" if calib > hi else name
-        ax.text(xa - 0.24, y0, label, fontsize=34,
+        label = f"CHEATER  {calib:.0f}" if calib > hi else f"{name}  {calib:.1f}"
+        ax.text(xa - 0.26, y0, label, fontsize=34,
                 fontweight="bold" if cheat else "normal",
                 color=colour if cheat else "#55585c", family=SANS, ha="right", va="center")
         ax.text(xb + 0.26, Y(held), f"{held:.1f}", fontsize=36, fontweight="bold",
@@ -62,7 +63,7 @@ out = card(
     accent="#8957e5", badge="B",
     kicker="METHODOLOGY  ·  works with any agent stack",
     headline="The cheater tops the ranking",
-    evidence="dB on calibration, then on files tuning never touched",
+    evidence="dB on calibration, then on held-out files",
     chart=chart,
     footer="github.com/GuoCheng24/breakthrough-harness",
     headline_size=46,

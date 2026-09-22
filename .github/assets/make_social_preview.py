@@ -2,12 +2,12 @@
 
 The previous card was a screenshot of examples/toy_loop.py output. At the 360 px a Slack unfurl
 gives a card, that was unreadable, so the message now lives in the headline and the terminal panel
-is texture beside it. Layout shared with the other cards in this account via bin/lightcard.py.
+is texture beside it. Layout in lightcard.py next to this file.
 """
 import pathlib
 import sys
 
-sys.path.insert(0, str(pathlib.Path.home() / "bin"))
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from lightcard import draw  # noqa: E402
 
 out = draw(

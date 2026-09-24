@@ -64,18 +64,19 @@
 | 你的技术栈 | 这样做 |
 |---|---|
 | **DeepSeek Harness** | **无需拷贝** —— 克隆本仓, DSH 直接就能找到 [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md):它的文件系统 skill 提供者以 rank 200 扫描 `<项目根>/.agents/skills`。要用在你自己的项目里, 把那个目录拷过去, 或把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 放到项目根 —— DSH 的 `agent-instructions` 插件会加载它 |
-| **OpenAI Codex** | 同一个文件:把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(Codex 读 `AGENTS.md`) |
+| **Codex、Gemini CLI、Cursor、GitHub Copilot、Devin Desktop** —— 以 skill 形式 | 把 [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md) 拷进项目的 `.agents/skills/`;这五家现在都原生读取该目录,任务需要时才加载 |
+| **OpenAI Codex** —— 以指令文件形式 | 同一个文件:把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录(Codex 读 `AGENTS.md`) |
 | **其它读 `AGENTS.md` 的工具**(Jules、Amp…) | 把 [`adapters/AGENTS.md`](adapters/AGENTS.md) 拷进项目根目录 |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` 后 `/plugin install breakthrough-harness@breakthrough-harness`——或手动 `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `mkdir -p 你的项目/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
 | **GitHub Copilot** | 一键安装:从 GitHub 官方的 [awesome-copilot](https://github.com/github/awesome-copilot) 收录中[装 Research Harness Engineer agent](https://aka.ms/awesome-copilot/install/agent?url=vscode%3Achat-agent%2Finstall%3Furl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fgithub%2Fawesome-copilot%2Fmain%2Fagents%2Fresearch-harness-engineer.agent.md)——或把 [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) 并入 `.github/copilot-instructions.md` |
 | **Gemini CLI** | 把 [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) 拷进项目根目录为 `GEMINI.md` |
-| **Windsurf** | `mkdir -p 你的项目/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
+| **Devin Desktop**(原 Windsurf) | `mkdir -p 你的项目/.devin/rules && cp adapters/windsurf/breakthrough-loop.md $_` —— `.windsurf/rules/` 仍作为旧路径被读取 |
 | **Cline** | `mkdir -p 你的项目/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |
 | **Aider** | 保存 [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md),用 `aider --read CONVENTIONS.md` 启动 |
 | **其它一切**(OpenAI/Gemini/Anthropic 裸 API、LangChain、自研循环、或者你本人) | 粘贴 [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
 
-所有适配器承载同一套方法论;五个纯 markdown 适配器由单一源([`adapters/_core.md`](adapters/_core.md))生成,漂移即 CI 失败。你的工具若读 `AGENTS.md`,装它或专属文件二选一,别都装。
+所有适配器承载同一套方法论;五个纯 markdown 适配器由单一源([`adapters/_core.md`](adapters/_core.md))生成,漂移即 CI 失败。你的工具若读 `AGENTS.md`,装它或专属文件二选一,别都装;skill 与规则文件同理,每个工具只走一条路,否则规则会被加载两遍。
 
 ## 快速开始
 

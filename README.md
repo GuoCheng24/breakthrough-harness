@@ -75,13 +75,14 @@ adapters just package it for wherever your agent reads instructions:
 | Your stack | Do this |
 |---|---|
 | **DeepSeek Harness** | **nothing to copy** — clone this repo and DSH already finds [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md); its filesystem skill provider scans `<projectRoot>/.agents/skills` at rank 200. For your own project, copy that directory, or copy [`adapters/AGENTS.md`](adapters/AGENTS.md) to the project root, which DSH's `agent-instructions` plugin loads |
-| **OpenAI Codex** | same file: copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (Codex reads `AGENTS.md`) |
+| **Codex, Gemini CLI, Cursor, GitHub Copilot, Devin Desktop** — as a skill | copy [`.agents/skills/breakthrough-loop/`](.agents/skills/breakthrough-loop/SKILL.md) into your project's `.agents/skills/`; all five now read skills from that directory natively, and a skill loads only when the task calls for it |
+| **OpenAI Codex** — as instructions | same file: copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root (Codex reads `AGENTS.md`) |
 | **Any other `AGENTS.md` tool** (Jules, Amp, …) | copy [`adapters/AGENTS.md`](adapters/AGENTS.md) into your project root |
 | **Claude Code** | `/plugin marketplace add GuoCheng24/breakthrough-harness` then `/plugin install breakthrough-harness@breakthrough-harness` — or manually `cp -r adapters/claude-code/breakthrough-loop ~/.claude/skills/` |
 | **Cursor** | `mkdir -p your-project/.cursor/rules && cp adapters/cursor/breakthrough-loop.mdc $_` |
 | **GitHub Copilot** | one click: [install the Research Harness Engineer agent](https://aka.ms/awesome-copilot/install/agent?url=vscode%3Achat-agent%2Finstall%3Furl%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fgithub%2Fawesome-copilot%2Fmain%2Fagents%2Fresearch-harness-engineer.agent.md) from GitHub's own [awesome-copilot](https://github.com/github/awesome-copilot) collection — or merge [`adapters/copilot/copilot-instructions.md`](adapters/copilot/copilot-instructions.md) into `.github/copilot-instructions.md` |
 | **Gemini CLI** | copy [`adapters/gemini/GEMINI.md`](adapters/gemini/GEMINI.md) into your project root as `GEMINI.md` |
-| **Windsurf** | `mkdir -p your-project/.windsurf/rules && cp adapters/windsurf/breakthrough-loop.md $_` |
+| **Devin Desktop** (formerly Windsurf) | `mkdir -p your-project/.devin/rules && cp adapters/windsurf/breakthrough-loop.md $_` — `.windsurf/rules/` is still read as a legacy path |
 | **Cline** | `mkdir -p your-project/.clinerules && cp adapters/cline/breakthrough-loop.md $_` |
 | **Aider** | save [`adapters/aider/CONVENTIONS.md`](adapters/aider/CONVENTIONS.md) and launch `aider --read CONVENTIONS.md` |
 | **Anything else** (OpenAI/Gemini/Anthropic raw API, LangChain, custom loop, a human) | paste [`adapters/SYSTEM_PROMPT.md`](adapters/SYSTEM_PROMPT.md) |
@@ -89,7 +90,8 @@ adapters just package it for wherever your agent reads instructions:
 All adapters carry the same methodology; the five plain-markdown ones are
 generated from a single source ([`adapters/_core.md`](adapters/_core.md)) and
 CI fails if they drift. If your tool reads `AGENTS.md`, install either that
-or the tool-specific file — not both.
+or the tool-specific file — not both — and the same goes for the skill and a
+rules file: one route per tool, or the rules arrive twice.
 
 ## Quick start
 

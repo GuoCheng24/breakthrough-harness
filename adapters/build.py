@@ -43,9 +43,10 @@ TARGETS = {
 trigger: always_on
 ---
 
-<!-- breakthrough-loop discipline for Windsurf. Install:
-     mkdir -p .windsurf/rules && cp this file into .windsurf/rules/
-     6000-char cap applies to this file - keep additions in _core.md lean.
+<!-- breakthrough-loop discipline for Devin Desktop (formerly Windsurf). Install:
+     mkdir -p .devin/rules && cp this file into .devin/rules/
+     (.windsurf/rules/ is still read as a legacy path).
+     Workspace rule files are capped at 12,000 characters - keep _core.md lean.
      Regenerated from adapters/_core.md - edit there, not here. {URL} -->
 # Research discipline for this project
 

@@ -153,6 +153,14 @@ The core claim is not folklore; the named systems and known failure modes:
   the discipline of scientific vs. nuisance hyperparameters this repo's sweep
   rules descend from.
 
+## Other things from the same desk
+
+- [groundwork](https://github.com/GuoCheng24/groundwork) — a research pipeline for coding agents whose first stage can return NO-GO; on PyPI as `groundwork-research`
+- [doubleblind](https://github.com/GuoCheng24/doubleblind) — re-derive every number in a README or paper from committed files, and brief a reviewer that was told nothing
+- [batch-logprob-gap](https://github.com/GuoCheng24/batch-logprob-gap) — in low-precision training the same token gets a different log probability depending on its batch shape — measured, with what it does and does not do to GRPO
+
+More at [github.com/GuoCheng24](https://github.com/GuoCheng24).
+
 ## License
 
 MIT. Use it, fork it, disagree with it.

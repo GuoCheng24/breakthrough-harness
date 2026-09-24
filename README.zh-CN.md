@@ -118,6 +118,14 @@ python examples/toy_loop.py     # 30 秒内,只依赖 numpy
 - **测试集过拟合实测**(Recht 等, ICML 2019, [PMLR 97](https://proceedings.mlr.press/v97/recht19a.html))——领域尺度上测得的"增益不迁移"分布。
 - **Deep learning tuning playbook**(Godbole 等, 2023, [google-research/tuning_playbook](https://github.com/google-research/tuning_playbook))——本仓库扫参规则的来源之一。
 
+## 同一张桌子上的其他东西
+
+- [groundwork](https://github.com/GuoCheng24/groundwork) —— 给编码 agent 用的科研流水线,第一个阶段就可能返回 NO-GO;PyPI 上名为 `groundwork-research`
+- [doubleblind](https://github.com/GuoCheng24/doubleblind) —— 让 README 或论文里的每个数字都能从已提交的文件重新算出来,并给一个什么都没被告知的审稿人写简报
+- [batch-logprob-gap](https://github.com/GuoCheng24/batch-logprob-gap) —— 低精度训练中,同一个 token 的 log 概率会随 batch 形状而变;这里测量了它,以及它对 GRPO 有什么影响、没有什么影响
+
+更多见 [github.com/GuoCheng24](https://github.com/GuoCheng24)。
+
 ## 许可
 
 MIT。用它、fork 它、反驳它。
